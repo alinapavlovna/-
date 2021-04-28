@@ -1,7 +1,6 @@
-let modal;
 
 function openModal(modalSelector, modalTimer) {
-    modal = document.querySelector(modalSelector);
+    const modal = document.querySelector(modalSelector);
 
     modal.classList.add('show');
     modal.classList.remove('hide');
@@ -13,7 +12,7 @@ function openModal(modalSelector, modalTimer) {
 }
 
 function closeModal(modalSelector) {
-    modal = document.querySelector(modalSelector);
+    const modal = document.querySelector(modalSelector);
 
     modal.classList.add('hide');
     modal.classList.remove('show');
@@ -21,9 +20,8 @@ function closeModal(modalSelector) {
 }
 
 
-
 function modalWindow(triggerSelector, modalSelector, modalTimer) {
-    let modal = document.querySelector(modalSelector),
+    const modal = document.querySelector(modalSelector),
         modalBtns = document.querySelectorAll(triggerSelector);
 
     modalBtns.forEach(btn => {
@@ -43,11 +41,6 @@ function modalWindow(triggerSelector, modalSelector, modalTimer) {
         }
     });
 
-    //let modalTimer = setTimeout(openModal, 10000);
-
-    window.addEventListener('scroll', showModalByScroll);
-
-
     function showModalByScroll() {
         let scrolled = window.pageYOffset + document.documentElement.clientHeigth;
         if (scrolled >= document.documentElement.scrollHeigth) {
@@ -56,6 +49,7 @@ function modalWindow(triggerSelector, modalSelector, modalTimer) {
         }
     }
 
+    window.addEventListener('scroll', showModalByScroll);
 }
 
 export default modalWindow;

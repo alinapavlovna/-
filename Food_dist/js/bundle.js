@@ -40,9 +40,23 @@ function calculator() {
     localStorage.setItem('ratio', 1.375);
   }
 
-  function initialSettings(selector, activeClass) {
-    var elements = document.querySelectorAll(selector); // console.log(elements);
+  function calculateCallories() {
+    if (!sex || !height || !weight || !age || !ratio) {
+      result.textContent = '____';
+      return;
+    }
 
+    if (sex === 'female') {
+      result.textContent = Math.round((447.6 + 9.2 * weight + 3.1 * height - 4.3 * age) * ratio);
+    } else {
+      result.textContent = Math.round((88.36 + 13.4 * weight + 4.8 * height - 5.7 * age) * ratio);
+    }
+  }
+
+  calculateCallories();
+
+  function initialSettings(selector, activeClass) {
+    var elements = document.querySelectorAll(selector);
     elements.forEach(function (elem) {
       elem.classList.remove(activeClass);
 
@@ -59,35 +73,20 @@ function calculator() {
   initialSettings('#gender div', 'calculating__choose-item_active');
   initialSettings('.calculating__choose_big div', 'calculating__choose-item_active');
 
-  function calculateCallories() {
-    if (!sex || !height || !weight || !age || !ratio) {
-      result.textContent = '_____';
-      return;
-    }
-
-    if (sex === 'female') {
-      result.textContent = Math.round(447.6 + 9.2 * weight + 3.1 * height - 4.3 * age * ratio);
-    } else {
-      result.textContent = Math.round((88.36 + 13.4 * weight + 4.8 * height - 5.7 * age) * ratio);
-    }
-  }
-
-  calculateCallories();
-
   function calcStaticInfo(selector, activeClass) {
     var elements = document.querySelectorAll(selector);
     elements.forEach(function (elem) {
       elem.addEventListener('click', function (e) {
         if (e.target.getAttribute('data-ratio')) {
           ratio = +e.target.getAttribute('data-ratio');
-          localStorage.setItem('ratio', ratio);
+          localStorage.setItem('ratio', +e.target.getAttribute('data-ratio'));
         } else {
           sex = e.target.getAttribute('id');
-          localStorage.setItem('sex', sex);
+          localStorage.setItem('sex', e.target.getAttribute('id'));
         }
 
         elements.forEach(function (elem) {
-          return elem.classList.remove(activeClass);
+          elem.classList.remove(activeClass);
         });
         e.target.classList.add(activeClass);
         calculateCallories();
@@ -96,7 +95,7 @@ function calculator() {
   }
 
   calcStaticInfo('#gender div', 'calculating__choose-item_active');
-  calcStaticInfo('.calculating__choose_big', 'calculating__choose-item_active');
+  calcStaticInfo('.calculating__choose_big div', 'calculating__choose-item_active');
 
   function calcDynamicInfo(selector) {
     var input = document.querySelector(selector);
@@ -125,7 +124,6 @@ function calculator() {
     });
   }
 
-  ;
   calcDynamicInfo('#height');
   calcDynamicInfo('#weight');
   calcDynamicInfo('#age');
@@ -163,9 +161,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 function cards() {
-  // let slide = document.querySelector('.menu__item'),
-  //     slides = document.querySelectorAll('.menu__item'),
-  //     menu = document.querySelector('.menu__field');
   var NewMenuItem = /*#__PURE__*/function () {
     function NewMenuItem(newSubtitle, newAlt, newImg, newDesc, newPrice, parentSelector) {
       _classCallCheck(this, NewMenuItem);
@@ -212,37 +207,7 @@ function cards() {
           price = _ref.price;
       new NewMenuItem(title, altimg, img, descr, price, ".menu .container").createNewItem();
     });
-  }); // getResource("http://localhost:3000/menu").then((data) => {
-  //     data.forEach((obj) => {
-  //         obj.parentSelector = ".menu .container";
-  //         new NewMenuItem(...Object.values(obj)).createNewItem();
-  //     });
-  // });
-  // let newSlide = new NewMenuItem('Menu', 'alt', 'img/tabs/vegy.jpg', 'Description', 'Price', '.menu .container');
-  // newSlide.createNewItem();
-  // let newSlide1 = new NewMenuItem('Menu', 'alt', 'img/tabs/vegy.jpg', 'Description', 'Price', '.menu .container');
-  // newSlide1.createNewItem();
-  // new NewMenuItem(
-  //     'Меню “Премиум”',
-  //     "elite",
-  //     "img/tabs/elite.jpg",
-  //     'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-  //     21,
-  //     ".menu .container"
-  // ).createNewItem();
-  // let newSlide2 = new NewMenuItem('Menu', 'alt', 'img/tabs/vegy.jpg', 'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-  //     'Price', '.menu .container');
-  // newSlide2.createNewItem();
-  // let newSlide3 = new NewMenuItem('Menu', 'alt', 'img/tabs/vegy.jpg', 'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-  //     'Price', '.menu .container');
-  // newSlide3.createNewItem();
-  // let newSlide4 = new NewMenuItem('Menu', 'alt', 'img/tabs/vegy.jpg', 'Description', 'Price', '.menu .container');
-  // newSlide4.createNewItem();
-  // let newSlide5 = new NewMenuItem('Menu', 'alt', 'img/tabs/vegy.jpg', 'Description', 'Price', '.menu .container');
-  // let newSlide6 = new NewMenuItem('Menu', 'alt', 'img/tabs/vegy.jpg', 'Description', 'Price', '.menu .container');
-  // let newSlide7 = new NewMenuItem('Menu', 'alt', 'img/tabs/vegy.jpg', 'Description', 'Price', '.menu .container');
-  // newSlide5.createNewItem();
-  // POST request (send data to  the server)
+  });
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (cards);
@@ -310,7 +275,7 @@ function forms(modalTimer) {
       (0,_services_services__WEBPACK_IMPORTED_MODULE_9__.postData)('http://localhost:3000/requests', json).then(function (data) {
         console.log(data);
         thanksMassage(info.success);
-        statusMessage.remove(); //удаляем спиннэр
+        statusMessage.remove(); //удаляем спиннер
       }).catch(function () {
         thanksMassage(info.failure);
       }).finally(function () {
@@ -320,8 +285,7 @@ function forms(modalTimer) {
   }
 
   function thanksMassage(mes) {
-    var prevModal = document.querySelector('.modal__dialog'); // prevModal.style.display = 'none';
-
+    var prevModal = document.querySelector('.modal__dialog');
     prevModal.classList.add('hide');
     (0,_modal__WEBPACK_IMPORTED_MODULE_8__.openModal)('.modal', modalTimer);
     var thanksModal = document.createElement('div');
@@ -331,14 +295,10 @@ function forms(modalTimer) {
     setTimeout(function () {
       thanksModal.remove();
       prevModal.classList.add('show');
-      prevModal.classList.remove('hide'); //  prevModal.style.display = 'block';
-
+      prevModal.classList.remove('hide');
       (0,_modal__WEBPACK_IMPORTED_MODULE_8__.closeModal)('.modal');
     }, 4000);
-  } // fetch('db.json')
-  //     .then(data => data.json())
-  //     .then(res => console.log(res));
-
+  }
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (forms);
@@ -363,10 +323,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var modal;
 
 function openModal(modalSelector, modalTimer) {
-  modal = document.querySelector(modalSelector);
+  var modal = document.querySelector(modalSelector);
   modal.classList.add('show');
   modal.classList.remove('hide');
   document.body.style.overflow = 'hidden';
@@ -377,7 +336,7 @@ function openModal(modalSelector, modalTimer) {
 }
 
 function closeModal(modalSelector) {
-  modal = document.querySelector(modalSelector);
+  var modal = document.querySelector(modalSelector);
   modal.classList.add('hide');
   modal.classList.remove('show');
   document.body.style.overflow = '';
@@ -400,9 +359,7 @@ function modalWindow(triggerSelector, modalSelector, modalTimer) {
     if (e.code === 'Escape' && modal.classList.contains('show')) {
       closeModal(modalSelector);
     }
-  }); //let modalTimer = setTimeout(openModal, 10000);
-
-  window.addEventListener('scroll', showModalByScroll);
+  });
 
   function showModalByScroll() {
     var scrolled = window.pageYOffset + document.documentElement.clientHeigth;
@@ -412,6 +369,8 @@ function modalWindow(triggerSelector, modalSelector, modalTimer) {
       window.removeEventListener('scroll', showModalByScroll);
     }
   }
+
+  window.addEventListener('scroll', showModalByScroll);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (modalWindow);
@@ -740,7 +699,7 @@ window.addEventListener('DOMContentLoaded', function () {
   }, 10000);
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_0__.default)('.tabheader__item', '.tabcontent', '.tabheader__items', 'tabheader__item_active');
   (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__.default)('[data-modal]', '.modal', modalTimer);
-  (0,_modules_timer__WEBPACK_IMPORTED_MODULE_2__.default)('.timer', '2021-03-27');
+  (0,_modules_timer__WEBPACK_IMPORTED_MODULE_2__.default)('.timer', '2021-12-20');
   (0,_modules_cards__WEBPACK_IMPORTED_MODULE_3__.default)();
   (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_4__.default)();
   (0,_modules_forms__WEBPACK_IMPORTED_MODULE_5__.default)(modalTimer);

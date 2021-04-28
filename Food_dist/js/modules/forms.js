@@ -14,10 +14,7 @@ function forms(modalTimer) {
         bindPostData(item);
     });
 
-
-
-
-
+    
     function bindPostData(form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -39,7 +36,7 @@ function forms(modalTimer) {
                 .then((data) => {
                     console.log(data);
                     thanksMassage(info.success);
-                    statusMessage.remove(); //удаляем спиннэр
+                    statusMessage.remove(); //удаляем спиннер
                 })
                 .catch(() => {
                     thanksMassage(info.failure);
@@ -55,7 +52,6 @@ function forms(modalTimer) {
     function thanksMassage(mes) {
         const prevModal = document.querySelector('.modal__dialog');
 
-        // prevModal.style.display = 'none';
         prevModal.classList.add('hide');
         openModal('.modal', modalTimer);
 
@@ -74,15 +70,10 @@ function forms(modalTimer) {
             thanksModal.remove();
             prevModal.classList.add('show');
             prevModal.classList.remove('hide');
-            //  prevModal.style.display = 'block';
             closeModal('.modal');
         }, 4000);
     }
 
-
-    // fetch('db.json')
-    //     .then(data => data.json())
-    //     .then(res => console.log(res));
 }
 
 export default forms;

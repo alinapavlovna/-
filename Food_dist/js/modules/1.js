@@ -1,6 +1,6 @@
 function calculator() {
     const result = document.querySelector('.calculating__result span');
-    
+
     let sex, height, weight, age, ratio;
 
     if (localStorage.getItem('sex')) {
@@ -19,11 +19,12 @@ function calculator() {
 
     function calculateCallories() {
         if (!sex || !height || !weight || !age || !ratio) {
-            result.textContent = '____';
+            result.textContent = '_____';
             return;
         }
+
         if (sex === 'female') {
-            result.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio);
+            result.textContent = Math.round(447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age) * ratio);
         } else {
             result.textContent = Math.round((88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio);
         }
@@ -33,7 +34,7 @@ function calculator() {
 
     function initialSettings(selector, activeClass) {
         const elements = document.querySelectorAll(selector);
-
+        // console.log(elements);
         elements.forEach(elem => {
             elem.classList.remove(activeClass);
             if (elem.getAttribute('id') === localStorage.getItem('sex')) {
@@ -42,7 +43,7 @@ function calculator() {
             if (elem.getAttribute('data-ratio') === localStorage.getItem('ratio')) {
                 elem.classList.add(activeClass);
             }
-        });
+        })
     }
 
     initialSettings('#gender div', 'calculating__choose-item_active');
@@ -60,20 +61,20 @@ function calculator() {
                     sex = e.target.getAttribute('id');
                     localStorage.setItem('sex', e.target.getAttribute('id'));
                 }
-    
-                elements.forEach(elem => {
-                    elem.classList.remove(activeClass);
-                });
-    
+
+                elements.forEach(elem => elem.classList.remove(activeClass));
+
                 e.target.classList.add(activeClass);
-    
+
                 calculateCallories();
-            });
+            })
         });
+
     }
 
     calcStaticInfo('#gender div', 'calculating__choose-item_active');
-    calcStaticInfo('.calculating__choose_big div', 'calculating__choose-item_active');
+    calcStaticInfo('.calculating__choose_big', 'calculating__choose-item_active');
+
 
     function calcDynamicInfo(selector) {
         const input = document.querySelector(selector);
@@ -84,7 +85,8 @@ function calculator() {
             } else {
                 input.style.border = 'none';
             }
-            switch(input.getAttribute('id')) {
+
+            switch (input.getAttribute('id')) {
                 case "height":
                     height = +input.value;
                     break;
@@ -98,12 +100,11 @@ function calculator() {
 
             calculateCallories();
         });
-    }
+    };
 
     calcDynamicInfo('#height');
     calcDynamicInfo('#weight');
     calcDynamicInfo('#age');
-
 }
 
 export default calculator;
